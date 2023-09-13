@@ -1,0 +1,58 @@
+ {% load static %}
+<html>
+<head>
+  <link rel="stylesheet" href="/static/css/styles.css">
+
+
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title> Registration or Sign Up form in HTML CSS | CodingLab </title>-->
+    <link rel="stylesheet" href="style.css">
+   </head>
+<body>
+  <div class="wrapper">
+    <h2>Registration</h2>
+    <form action="" method ="post"> 
+      {%  csrf_token %}
+      <div class="input-box">
+        <input type="text" placeholder="Enter your username"   name="username">
+      </div>
+
+       <div class="input-box">
+        <input type="password" placeholder="Create password" name="password" >
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="Confirm password"  name="password1">
+      </div>
+      
+       <div class="input-box button">
+       <input type="Submit" value="Register Now" >
+      </div>
+      
+    </form>
+  </div> 
+   {% for msg in messages %}
+  <h1>{{msg}}</h1>
+  {% endfor %} 
+  <script>
+  document.querySelector('form').onsubmit = function(e){
+    var username=document.querySelector('input[name="username"]').value;
+    var password=document.querySelector('input[name="password"]').value;
+    var password1= document.querySelector('input[name="password1"]').value;
+    if(! username || !password || !password1){
+      alert("Please fill all the fields");
+      e.preventDefault();
+    }else if (password !== password1)
+    {
+      alert ("Passwords do not match");
+      e.preventDefault();
+    }
+    
+  }
+    </script
+  
+ </body>

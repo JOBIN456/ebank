@@ -1,0 +1,274 @@
+
+ 
+ {% load static %}
+ <!DOCTYPE html>
+ 
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+     <title>Registration Form in HTML CSS</title>
+    
+     <link rel="stylesheet" href="{% static 'st_regis/css/style.css' %}" />
+     <style>
+       input[type='checkbox'] {
+           transform: scale(0.5);
+           /* margin-left: 10px; */
+       }
+       .gend {
+         display: flex;
+         align-items: center;
+     }
+     .button {
+      background-color: blue;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      position: absolute; 
+      top: 0; 
+      left: 0;
+    }
+    
+   </style>
+ <script>
+   function toggleForm() {
+       var formContainer = document.getElementById("form-container");
+     
+       if (formContainer.style.display === "none") {
+         formContainer.style.display = "block";
+       } 
+   
+       else {
+         formContainer.style.display = "none";
+       }
+   }
+   
+   function updateList() {
+     var branch = document.getElementById("branch").value; 
+     var branches = document.getElementById("branches");
+     branches.innerHTML = "";
+     var states = {
+       kollam: ["Pallimuku", "Kottarkara"],
+       Trivandrum: ["Vizhijam", "kovalam"],
+       Kannur: ["Kannapuram", "mahe"],
+       Kochi: ["Fort kochi", "Mattanchery"],
+       Ernakulam: ["Angamaly", "Aluva"]
+     };
+   
+     for (var i = 0; i < states[branch].length; i++) { 
+       var option = document.createElement("option");
+       option.value = states[branch][i]; 
+       option.text = states[branch][i];
+       branches.appendChild(option);
+     }
+   }
+   
+   </script>
+   
+
+   </head>
+   <body>
+    
+     <button class="button" onclick="toggleForm()">Bank Form</button>
+     <div id="form-container" style="display:none;">
+     <section class="container">
+       <header>Registration Form</header>
+       <form action="{% url 'apply' %}" method="POST" class="form">
+         {% csrf_token %}
+         <div class="input-box">
+           <label for="name">Name:</label>
+           <input type="text" id="name" name="name">
+         </div>
+         <div class="input-box">
+           <label for="dob">Date of Birth:</label>
+           <input type="date" id="dob" name="dob"><br>
+         </div>
+ 
+ <div class="input-box">
+   <label for="age">Age:</label><br>
+   <input type="number" id="age" name="age"><br>
+ </div>
+ <div class="gender-box">
+   <h3>Gender</h3>
+   <div class="gender-option">
+     <div class="gender">
+       <input type="radio" id="male" name="gender" value="M">
+       <label for="male">Male</label><br>
+     </div>
+     <div class="gender">
+ <input type="radio" id="female" name="gender" value="F">
+                         <label for="female">Female</label>
+     </div>
+   </div>
+ </div>
+ 
+ <div class="column">
+   <div class="input-box">
+     <label for="phone">Phone Number:</label>
+     <input type="tel" id="phone" name="phone">
+     
+   </div>
+ </div>
+         <div class="input-box">
+           <label for="email">Email Address:</label><br>
+                         <input type="email" id="email" name="email">
+         </div>
+         <div class="input-box address">
+           <label for="address">Address:</label><br>
+           <input type="address"  name="address">
+           &nbsp;&nbsp;  &nbsp;&nbsp;
+           <div class="column">
+             <label for="branch">Select  District</label><br><br> 
+             <div class="select-box">
+              
+                         <select id="branch" name="branch" onchange="updateList()"> 
+                             <option value="">--Select District--</option>
+                             <option value="kollam">Kollam</option>
+                             <option value="Trivandrum">Trivandrum</option>
+                             <option value="Kannur">Kannur</option>
+                             <option value="Kochi">Kochi</option>
+                             <option value="Ernakulam">Ernakulam</option>
+                         </select>
+             </div>
+             <div class="select-box">
+             <label for='branches'></label> 
+                         <select id='branches' name='branches'>  
+                             <option value=''>--Select Sub Branch--</option> 
+                         </select><br/>
+                 </div>        
+           </div>
+           &nbsp;&nbsp;
+           <div class="column">
+             <label for="account_type">Account type</label>
+             <div class="select-box">
+               
+               <select name="account_type" id="account_type">
+                 <option value=''>--Select account type--</option> 
+                   <option value="S">Savings Account</option>
+                   <option value="C">Current Account</option>
+                   <option value="F">Fixed Deposit Account</option>
+               </select>
+             </div>
+             
+         </div>  &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;
+         <div class="bing">
+           <br>
+           Materials Provided:<br/>
+           <div class="opt">
+             <div class="gend">
+                 <input type='checkbox' id='debitCard' name='debitCard'>
+                 <label for='debitCard'>DebitCard</label>
+             </div>
+             <div class="gend">
+                 <input type='checkbox' id='creditCard' name='creditCard'>
+                 <label for='creditCard'>CreditCard</label>
+             </div>
+             <div class="gend">
+               &nbsp; &nbsp;&nbsp;<input type='checkbox' id='chequeBook' name='chequeBook'>
+                 <label for='chequeBook'>ChequeBook</label>
+             </div>
+         </div>
+         
+           
+         </div>
+       </div>
+       <input type="submit" value="Submit">
+       </form>
+       
+       
+       <button>logout</button>
+     </section>
+     </div>
+     <script>
+     document.querySelector('form').onsubmit = function(e) {
+      e.preventDefault();
+      var name = document.querySelector('#name').value;
+      var dob = document.querySelector('#dob').value;
+      var age = document.querySelector('#age').value;
+      var genderM = document.querySelector('#male').checked;
+      var genderF = document.querySelector('#female').checked;
+      var phone = document.querySelector('#phone').value;
+      var email = document.querySelector('#email').value;
+      var address = document.querySelector('[name="address"]').value;
+      var branch = document.querySelector('#branch').value;
+      var branches = document.querySelector('#branches').value;
+      var account_type = document.querySelector('#account_type').value;
+      var debitCard = document.querySelector('#debitCard').checked;
+      var creditCard = document.querySelector('#creditCard').checked;
+      var chequeBook = document.querySelector('#chequeBook').checked;
+  
+      if (!name) {
+          alert('Please enter your name.');
+          return false;
+      }
+      
+      if (!dob) {
+          alert('Please enter your date of birth.');
+          return false;
+      }
+  
+      if (!age) {
+          alert('Please enter your age.');
+          return false;
+      }
+  
+      if (!genderM && !genderF) {
+          alert('Please select your gender.');
+          return false;
+      }
+  
+      if (!phone) {
+          alert('Please enter your phone number.');
+          return false;
+      }
+  
+      if (!email) {
+          alert('Please enter your email address.');
+          return false;
+      }
+  
+      if (!address) {
+          alert('Please enter your address.');
+          return false;
+      }
+  
+      if (!branch) {
+          alert('Please select your district.');
+          return false;
+      }
+  
+      if (!branches) {
+          alert('Please select your sub branch.');
+          return false;
+      }
+  
+      if (!account_type) {
+          alert('Please select your account type.');
+          return false;
+      }
+  
+      if (!debitCard && !creditCard && !chequeBook) {
+          alert('Please select at least one material provided.');
+          return false;
+      }
+  
+   
+     var messageDiv = document.createElement("div");
+     messageDiv.innerHTML = "Application Accepted. <a href='/'>Return to Home Page</a>";
+     messageDiv.style.padding = "20px";
+     messageDiv.style.backgroundColor = "#4CAF50";
+     messageDiv.style.color = "white";
+     messageDiv.style.marginBottom = "15px";
+     var link = messageDiv.querySelector("a");
+link.style.color = "#81C784";
+link.style.textDecoration = "none";
+link.style.fontWeight = "bold";
+
+
+     document.body.appendChild(messageDiv);
+  };</script>
+    </body>
+ </html>
+ 

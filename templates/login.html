@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+    <head><link rel="stylesheet" href="/static/css/styles.css"></head>
+<div class="login">
+    <h1>Login</h1>
+      <form action="" method="POST">
+        {%  csrf_token %}
+        <input type="text" name="username" placeholder="Username">
+          <input type="password" name="password" placeholder="Password">
+          <button type="submit" class="btn btn-primary btn-block btn-large">Submit</button><br>
+          <button class="btn btn-primary btn-block btn-large" onclick="window.open('http://127.0.0.1:8000/register/')">
+            REGISTER NO
+          </button>
+          
+          {% comment %} <button class="btn btn-primary btn-block btn-large" onclick="window.open('http://127.0.0.1:8000/register/')>REGISTER NO </button>
+             {% endcomment %}
+      </form>
+      {% for ms in messages %}
+      <h1>{{ms}}</h1>
+      {% endfor %}
+  </div></html>
+  
